@@ -1,4 +1,4 @@
-function fish_prompt
+function prompt
 	set_color yellow
    printf '%s' (whoami)
    set_color normal
