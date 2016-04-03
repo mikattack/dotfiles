@@ -1,6 +1,6 @@
 -- vim:ts=2:sw=2:et:
 -- 
--- Organizes Alex Mikitik's Message Systems Inc. email.
+-- Organizes Alex Mikitik's Sparkpost email.
 -- 
 -- This imapfilter configuration organizes mail in two steps:
 --   1. Moves anything that looks like a commit message into an appropriate
