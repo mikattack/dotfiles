@@ -1,0 +1,85 @@
+# Convenience macros
+[macros.install]
+  prefix = ["brew", "install"]
+
+[macros.pip]
+  prefix = ["pip3", "install"]
+
+
+# Individual tasks
+[tasks.git]
+  rejects = [["which", "git"]]
+  cmds = [["@install", "git"]]
+
+[tasks.fish]
+  rejects = [["which", "fish"]]
+  cmds = [
+    ["mkdir", "-p", "~/.config/fish/functions"],
+    ["@install", "fish"]
+  ]
+  links = [
+    [".config/fish/config.fish", "./fish/config.fish"],
+    [".config/fish/functions/clrs.fish", "./fish/functions/clrs.fish"],
+    [".config/fish/functions/prompt.fish", "./fish/functions/prompt.fish"]
+  ]
+
+[tasks.mercurial]
+  rejects = [["which", "hg"]]
+  cmds = [
+    ["@install", "mercurial"],
+    ["@install", "hg-flow"]
+  ]
+  links = [
+    [".hgrc", "./hg/hgrc"]
+  ]
+
+[tasks.imapfilter]
+  rejects = [["which", "imapfilter"]]
+  cmds = [["@install", "imapfilter"]]
+  links = [
+    [".imapfilter", "./imapfilter/"]
+  ]
+
+[tasks.python]
+  rejects = [["which", "python3"]]
+  cmds = [
+    ["@install", "python3"],
+    ["pip3", "install", "--upgrade", "pip"],
+    ["@pip", "backoff"],
+    ["@pip", "boto3"],
+    ["@pip", "falcon"],
+    ["@pip", "httpie"],
+    ["@pip", "python-json-logger"],
+    ["@pip", "requests"]
+  ]
+
+[tasks.tmux]
+  rejects = [["which", "tmux"]]
+  cmds = [
+    ["@install", "tmux"],
+    ["@pip", "tmuxomatic"]
+  ]
+  links = [
+    [".tmux.conf", "./tmux/tmux.conf"],
+    [".tmuxomatic", "./tmux/mikattack"]
+  ]
+
+[tasks.vim]
+  rejects = [["test", "-d", "~/.vim"]]
+  links = [
+    [".vimrc", "./vim/vimrc"],
+    [".vim", "./vim/vim/"]
+  ]
+
+
+# Make the Spice flow!
+[tasks.default]
+  deps = [
+    "git",
+    "fish",
+    "mercurial",
+    "imapfilter",
+    "python",
+    "tmux",
+    "vim"
+  ]
