@@ -107,6 +107,7 @@ function sort_designated_contact_messages(mailbox, contacts)
   -- Define all folders to sort contact messages from
   local sourceBoxes = {
     mailbox.inbox,
+    -- Had messages from people filed in archives that I wanted to re-file
     --mailbox['Archive/2007'],
     --mailbox['Archive/2008'],
     --mailbox['Archive/2009'],
@@ -124,7 +125,7 @@ function sort_designated_contact_messages(mailbox, contacts)
     resultCounts[address] = 0
   end
 
-  -- Loop through folders and evaluate the "FROME" address of each message
+  -- Loop through folders and evaluate the "FROM" address of each message
   -- against the contacts lookup.  If a match is found, move the message
   -- to the appropriate directory.
   for _, sbox in ipairs(sourceBoxes) do
@@ -141,29 +142,10 @@ function sort_designated_contact_messages(mailbox, contacts)
   end
 
   -- Report on how many messages were moved
+  print('Contact messages:')
   for address, count in pairs(resultCounts) do
     print(string.format('%-4d - %s', count, address))
-  end  
-
-  return
-  
-  --[[
-  -- Sort known commit messages
-  for subject, box in pairs(filters) do
-    local results = inbox:contain_subject(subject)
-    if #results > 0 then
-      --print(box)
-      --print('Messages: ' .. #results .."\n")
-      results:move_messages(mailbox[box]);
-    end
   end
-
-  -- Otherwise, stick all commit looking messages into 'Unaligned'
-  local unaligned = inbox:match_subject('\\[.+\\]')   -- Double '\' required
-  if #unaligned > 0 then
-    unaligned:move_messages(mailbox['Commits/Unaligned'])
-  end
---]]
 end
 
 
@@ -180,15 +162,32 @@ function archive_by_year(mailbox)
     return
   end
 
-  -- Create any mailboxes necessary for archives
+  local resultCounts = {}
 
-  
   for y = FIRST_YEAR, THIS_YEAR do
+    resultCounts[y] = 0
+
     -- Build up a search for messages falling within the given year
     local meta =
       results:arrived_before("31-Dec-" .. y) *
       results:arrived_since("1-Jan-" .. y)
-    meta:move_messages(mailbox["Archives/" .. y]);
+
+    if #meta > 0 then
+      -- Create any mailboxes necessary for archives
+      if not mailbox_exists(mailbox, 'Archive', string.format('%d', y)) then
+        mailbox:create_mailbox('Archive/' .. y)
+      end
+
+      -- Move messages to archive directory
+      resultCounts[y] = resultCounts[y] + #meta
+      meta:move_messages(mailbox["Archive/" .. y]);
+    end
+  end
+
+  -- Report on how many messages were moved
+  print('Yearly archived messages:')
+  for year = FIRST_YEAR, THIS_YEAR do
+    print(string.format('%-4d - %s', resultCounts[year], year))
   end
 end
 
@@ -196,4 +195,4 @@ end
 --[ Execution ]--------------------------------------------------------------
 
 sort_designated_contact_messages(home, mapping)
---archive_by_year(home)
+archive_by_year(home)
