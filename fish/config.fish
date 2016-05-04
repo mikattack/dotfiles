@@ -1,6 +1,7 @@
 
 # Put homebrew items first
 set PATH /usr/local/bin $PATH
+set -x HOMEBREW_NO_ANALYTICS 1
 
 # Go environment
 set PATH $HOME/Projects/go/bin $PATH
