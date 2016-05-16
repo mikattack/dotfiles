@@ -1,6 +1,6 @@
 
 [ui]
-username = Alex Mikitik <alex@messagesystems.com>
+username = Alex Mikitik <alex@sparkpost.com>
 merge = internal:merge
 #ignore=~/.hgignore_global
 
