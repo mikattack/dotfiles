@@ -53,6 +53,16 @@
     ["@pip", "requests"]
   ]
 
+[tasks.osx]
+  rejects = [
+    ["type", "-d", "~/Library/KeyBindings"],
+    ["type", "-e", "~/Library/KeyBindings/DefaultKeyBinding.dict"],
+  ]
+  cmds = [
+    ["mkdir", "-p", "~/Library/KeyBindings"],
+    ["cp", "./osx/DefaultKeyBinding.dict", "~/Library/KeyBindings/DefaultKeyBingding.dict"],
+  ]
+
 [tasks.tmux]
   rejects = [["which", "tmux"]]
   cmds = [
@@ -81,5 +91,6 @@
     "imapfilter",
     "python",
     "tmux",
-    "vim"
+    "vim",
+    "osx"
   ]
