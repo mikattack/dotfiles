@@ -1,9 +1,9 @@
 {
   "auto_complete": false,
   "auto_match_enabled": false,
-  "color_scheme": "Packages/User/SublimeLinter/Hyperlight.tmTheme",
+  "color_scheme": "Packages/User/Hyperlight.tmTheme",
   "draw_minimap_border": true,
-  "font_face": "Inconsolata-dz",
+  "font_face": "InconsolataGo",
   "font_options":
   [
     "no_italic"
