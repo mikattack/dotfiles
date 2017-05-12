@@ -60,7 +60,7 @@
   ]
   cmds = [
     ["mkdir", "-p", "~/Library/KeyBindings"],
-    ["cp", "./osx/DefaultKeyBinding.dict", "~/Library/KeyBindings/DefaultKeyBingding.dict"],
+    ["cp", "./osx/DefaultKeyBinding.dict", "~/Library/KeyBindings/DefaultKeyBinding.dict"],
   ]
 
 [tasks.tmux]
